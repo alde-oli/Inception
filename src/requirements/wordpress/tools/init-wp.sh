@@ -6,6 +6,8 @@ if [ ! -d "/home/alde-oli/data/wordpress" ]; then
     mkdir -p /home/alde-oli/data/wordpress
 fi
 
+sleep 30
+
 echo "Vérification de la disponibilité de MariaDB..."
 while ! mysqladmin ping -h"${DB_HOST}" --silent; do
     echo "En attente de MariaDB..."

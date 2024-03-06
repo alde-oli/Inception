@@ -2,18 +2,27 @@ version: '3'
 
 services:
   mariadb:
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+      args:  # Utilisez les variables `SQL_` comme arguments de build si nécessaire dans votre Dockerfile
+        DB_NAME: ${SQL_DATABASE}
+        DB_USER: ${SQL_USER}
+        DB_PASS: ${SQL_PASSWORD}
+        DB_ROOT: ${SQL_ROOT_PASSWORD}
     container_name: mariadb
+    ports:
+      - "3306:3306"
     networks:
       - inception
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-    env_file: .env
     volumes:
-      - mariadb:/var/lib/mysql
-    restart: unless-stopped
-    expose:
-      - "3306"
+      - db-volume:/var/lib/mysql
+    restart: always
+    environment:  # Passez les mêmes variables `SQL_` comme variables d'environnement au conteneur
+      - DB_NAME=${SQL_DATABASE}
+      - DB_USER=${SQL_USER}
+      - DB_PASS=${SQL_PASSWORD}
+      - DB_ROOT=${SQL_ROOT_PASSWORD}
 
   nginx:
     container_name: nginx
@@ -49,13 +58,11 @@ services:
 
 volumes:
   wordpress:
-    driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: '/home/alde-oli/data/wordpress'
-  mariadb:
-    driver: local
+  db-volume:
     driver_opts:
       type: 'none'
       o: 'bind'
