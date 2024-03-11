@@ -46,6 +46,7 @@ re: fclean all
 delete-volumes :
 	docker system prune -a --volumes
 	docker volume rm $$(docker volume ls -q)
+	rm -rf /home/alde-oli/data/*
 
 status :
 
