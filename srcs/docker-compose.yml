@@ -48,14 +48,14 @@ volumes:
     driver: local
     name: mariadb_v
     driver_opts:
-      device: /home/login/data/mariadb/
+      device: /home/alde-oli/data/mariadb/
       type: none
       o: bind
   wordpress_v:
     driver: local
     name: wordpress_v
     driver_opts:
-      device: /home/login/data/wordpress/
+      device: /home/alde-oli/data/wordpress/
       type: none
       o: bind
 
