@@ -1,8 +1,8 @@
 NAME = inception
 PATH_DOCKER_COMPOSE = srcs/docker-compose.yml
-PATH_V_WORDPRESS = /Users/alde-oli/data/wordpress
-PATH_V_MARIADB = /Users/alde-oli/data/mariadb
-PATH_TO_ENV_FILE = /Users/alde-oli/Desktop/.env
+PATH_V_WORDPRESS = /home/alde-oli/data/wordpress
+PATH_V_MARIADB = /home/alde-oli/data/mariadb
+PATH_TO_ENV_FILE = /home/alde-oli/Desktop/env_file
 RESET_COLOR = \033[0m
 
 all : prepare down build run
