@@ -1,17 +1,18 @@
 FROM debian:buster
 
-# Mise à jour des paquets et installation de NGINX, Vim, Curl, et OpenSSL
-RUN apt update && apt upgrade -y && \
-    apt install nginx vim curl openssl -y && \
-    mkdir -p /etc/nginx/ssl /var/www/html /var/run/nginx && \
-    chmod 755 /var/www/html && \
-    chown -R www-data:www-data /var/www/html && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/nginx/ssl/inception.key \
-    -out /etc/nginx/ssl/inception.crt \
-    -subj "/C=CH/ST=VD/L=Lausanne/O=42/OU=42/CN=alde-oli.42.fr/UID=alde-oli"
+RUN apt-get update -y  && apt upgrade -y && \
+	apt-get install -y nginx
 
-# Copie du fichier de configuration NGINX personnalisé
+RUN mkdir -p /etc/nginx/ssl
+RUN apt install -y openssl
+RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=SW/ST=VS/L=Lausane/O=42/OU=42/CN=alde-oli.42.fr/emailAddress=alde-oli@student.42.fr"
+
+RUN mkdir -p /var/run/nginx /var/www/wordpress && \
+	chmod -R 755 /var/www/wordpress && \
+	chown -R www-data:www-data /var/www/wordpress
+
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY tools/init-nginx.sh /usr/local/init-nginx.sh
+RUN chmod +x /usr/local/init-nginx.sh
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["sh", "/usr/local/init-nginx.sh"]
