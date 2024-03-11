@@ -6,7 +6,7 @@ services:
     networks:
         - inception
     build:
-        context: requirements/mariadb.
+        context: requirements/mariadb
         dockerfile: Dockerfile
     volumes:
         - mariadb_v:/var/lib/mysql
