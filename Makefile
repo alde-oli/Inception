@@ -38,8 +38,8 @@ clean: down
 
 fclean: down
 	docker system prune -a --volumes
-	docker volume rm $$(docker volume ls -q)
-	rm -rf ~/data
+	docker volume rm $(docker volume ls -q) | true
+	rm -rf /home/alde-oli/data/*
 
 re: fclean all
 
