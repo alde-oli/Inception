@@ -1,37 +1,36 @@
 NAME = inception
-PATH_DOCKER_COMPOSE = srcs/docker-compose.yml
-PATH_V_WORDPRESS = /home/alde-oli/data/wordpress
-PATH_V_MARIADB = /home/alde-oli/data/mariadb
-PATH_TO_ENV_FILE = /home/alde-oli/Desktop/env_file
-RESET_COLOR = \033[0m
+DOCKER_COMPOSE = srcs/docker-compose.yml
+VOLUME_WORDPRESS = /home/alde-oli/data/wordpress
+VOLUME_MARIADB = /home/alde-oli/data/mariadb
+ENV_PATH = /home/alde-oli/Desktop/env_file
 
-all : prepare down build run
+all : prepare down build run-daemon
 
 run:
-	docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} up
+	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} up
 
 run-daemon:
-	docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} up -d
+	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} up -d
 
 down:
-	docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} down
+	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} down
 
 stop:
-	docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} stop
+	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} stop
 
 prepare:
 	if [ ! -d srcs/.env ]; then \
-		cp ${PATH_TO_ENV_FILE} srcs/.env; \
+		cp ${ENV_PATH} srcs/.env; \
 	fi
-	if [ ! -d ${PATH_V_WORDPRESS} ]; then \
-		mkdir -p ${PATH_V_WORDPRESS}; \
+	if [ ! -d ${VOLUME_WORDPRESS} ]; then \
+		mkdir -p ${VOLUME_WORDPRESS}; \
 	fi
-	if [ ! -d ${PATH_V_MARIADB} ]; then \
-		mkdir -p ${PATH_V_MARIADB}; \
+	if [ ! -d ${VOLUME_MARIADB} ]; then \
+		mkdir -p ${VOLUME_MARIADB}; \
 	fi
 
 build:
-	docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} build
+	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} build
 
 clean: down
 	docker system prune -a
@@ -50,7 +49,7 @@ delete-volumes :
 
 status :
 
-	@docker-compose -f ${PATH_DOCKER_COMPOSE} -p ${NAME} ps
+	@docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} ps
 	@echo ""
 	@docker images
 	@echo ""
