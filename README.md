@@ -1,17 +1,7 @@
 <!-- YoRHa archive -->
-```
-▸ YoRHa // ARCHIVE — INCEPTION
-```
+<p align="center"><img src=".github/yorha-header.svg" width="100%" alt="YoRHa // ARCHIVE — Inception · Type: 42 Lausanne common-core project · solo · Stack: Docker · Docker Compose · NGINX · PHP-FPM 7.3 · WordPress (WP-CLI) · MariaDB · Debian Buster · Status: ■ COMPLETE"></p>
 
 A small WordPress hosting stack in Docker Compose: NGINX (TLS only), PHP-FPM and MariaDB. Each service runs from its own image, built from `debian:buster`.
-
-![Docker Compose](https://img.shields.io/badge/Docker-Compose-4e4b42?style=flat-square) ![TLS](https://img.shields.io/badge/TLS-1.2%20%7C%201.3-dad4bb?style=flat-square)
-
-| UNIT DATA | |
-|---|---|
-| Type | 42 Lausanne common-core project · solo |
-| Stack | Docker · Docker Compose · NGINX · PHP-FPM 7.3 · WordPress (WP-CLI) · MariaDB · Debian Buster |
-| Status | ■ COMPLETE |
 
 ## ▸ Overview
 The goal is to build a small production-like infrastructure without pulling ready-made service images. Each container has a hand-written Dockerfile and an entrypoint script. NGINX is the only public entry point, on port 443. It passes PHP requests over FastCGI to the WordPress container, which talks to MariaDB on a private bridge network. The database and site files are kept in named volumes bind-mounted on the host.
