@@ -19,7 +19,7 @@ stop:
 	docker-compose -f ${DOCKER_COMPOSE} -p ${NAME} stop
 
 prepare:
-	if [ ! -d srcs/.env ]; then \
+	if [ ! -f srcs/.env ]; then \
 		cp ${ENV_PATH} srcs/.env; \
 	fi
 	if [ ! -d ${VOLUME_WORDPRESS} ]; then \
@@ -37,7 +37,7 @@ clean: down
 
 fclean: down
 	docker system prune -a --volumes
-	docker volume rm $(docker volume ls -q)
+	docker volume rm $$(docker volume ls -q)
 	rm -rf /home/alde-oli/data/*
 
 re: fclean all
